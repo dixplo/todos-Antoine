@@ -29,11 +29,13 @@ public class TestController {
 		List<todo> todos=repo.findAll();
 		vue.addData("items",todos);
 		vue.addData("dialog",false);
-		vue.addDataRaw("todo","{name:'Le Nom',description:'',avancement:'',poids:'',}");
+		vue.addDataRaw("todos","{name:'Le Nom',description:'',avancement:'',poids:'',}");
 		
-		vue.addMethod("addTodo", "let self=this;"+Http.post("/rest/todos/create", "this.todo", "self.dialog=false;"
-				+ "self.items.push(response.data);self.todo={};"));
+		vue.addMethod("addTodo", "let self=this;"+Http.post("/rest/todos/create", "this.todos", "self.dialog=false;"
+				+ "self.items.push(response.data);self.todos={};"));
+		
 		vue.addMethod("updateTodo", "let self=this;self.dialog=true;self.todo=todo","todo");
+		
 		vue.addMethod("deleteTodo", 
 				"let self=this;let $='';"+Http.delete("'/rest/todos/'+item.id+$","self.message=response.data;"
 						+ "self.items.splice(index,1);"),"item","index");
